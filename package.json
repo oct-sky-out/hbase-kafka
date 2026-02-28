@@ -1,0 +1,26 @@
+{
+  "name": "hbase-kafka-local-practice",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TypeScript producer/consumer for local Kafka + HBase practice",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "producer": "tsx src/producer.ts",
+    "consumer": "tsx src/consumer.ts",
+    "consumer:once": "tsx src/consumer.ts --once",
+    "dlq:retry": "tsx src/dlq-retry.ts",
+    "hbase:metrics": "tsx src/hbase-metrics-exporter.ts",
+    "hbase:scan": "tsx src/hbase-scan.ts"
+  },
+  "dependencies": {
+    "@fxts/core": "^1.26.0",
+    "hbase": "^0.6.1",
+    "kafkajs": "^2.2.4",
+    "prom-client": "^15.1.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}
