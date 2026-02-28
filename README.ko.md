@@ -10,6 +10,24 @@ Kafka(3 브로커, KRaft) + HBase(1 노드) + TypeScript Producer/Consumer + 모
 
 `actions -> Kafka producer -> Kafka brokers -> consumer -> HBase(audit:logs) -> DLQ retry -> HBase(audit:fail_logs)`
 
+```mermaid
+flowchart LR
+  A["User Actions / Events"] --> B["Producer (TypeScript)"]
+  B --> C["Kafka Topic: audit_log"]
+
+  C --> D["Consumer (TypeScript)"]
+  D -->|success| E["HBase: audit:logs"]
+
+  D -->|failure| F["Kafka DLQ: audit_log_dlq"]
+  F --> G["DLQ Retry Worker"]
+
+  G -->|retry <= max_x_3| C
+  G -->|retry > max_x_3| H["HBase: audit:fail_logs"]
+
+  I["hbase-scan.ts"] --> E
+  I --> H
+```
+
 ## 사전 준비
 
 - Docker + Docker Compose
